@@ -1,16 +1,24 @@
 package io.github.yesterdaylz.kxqiandao.ui.screen
 
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.*
 import android.Manifest
 import android.app.TimePickerDialog
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.snap
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HowToReg
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -79,6 +88,9 @@ fun MainScreen(
 
     // Tab 根页面显示顶栏 / 底栏
     val showBars = navState.isRootPage
+
+    // CheckIn 界面显示浮动的签到按钮
+    val showFAB = selectedTab == AppDestination.CheckIn
 
     // 切后台再回来，签到状态可能变化
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
@@ -173,6 +185,23 @@ fun MainScreen(
                     }
                 )
             }
+        },
+        floatingActionButton = {
+            if (showFAB) {
+                ExtendedFloatingActionButton(
+                    onClick = { signViewModel.signInOrOut() },
+                    content = {
+                        Icon(if (signState.online) Icons.Default.Logout else Icons.Default.HowToReg, "签到/签退")
+                        Spacer(Modifier.width(2.dp))
+                        Text(
+                            text = if (signState.online) "签退" else "签到",
+                            color = if (signState.online) KxTheme.colors.danger else KxTheme.colors.onPrimary
+                        )
+                    },
+                    containerColor = if (signState.online) KxTheme.colors.surface else KxTheme.colors.primary,
+                    contentColor = if (signState.online) KxTheme.colors.danger else KxTheme.colors.onPrimary
+                )
+            }
         }
     ) { padding ->
         // 把当前 Tab 的导航器 provide 给 NavDisplay 里所有页面
@@ -181,10 +210,10 @@ fun MainScreen(
                 backStack = navState.currentStack,
                 onBack = { navState.navigator.goBack() },
                 transitionSpec = {
-                    fadeIn(animationSpec = spring()) togetherWith fadeOut(animationSpec = spring())
+                    fadeIn(animationSpec = snap()) togetherWith fadeOut(animationSpec = snap())
                 },
                 popTransitionSpec = {
-                    fadeIn(animationSpec = spring()) togetherWith fadeOut(animationSpec = spring())
+                    fadeIn(animationSpec = snap()) togetherWith fadeOut(animationSpec = snap())
                 },
                 entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
                 entryProvider = entryProvider {
@@ -275,4 +304,3 @@ fun MainScreen(
         }
     }
 }
-

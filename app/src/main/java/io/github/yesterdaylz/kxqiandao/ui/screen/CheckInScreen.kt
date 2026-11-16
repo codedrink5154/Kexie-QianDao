@@ -78,6 +78,7 @@ fun CheckInTab(
             statusKnown = uiState.statusKnown,
         )
 
+        /*
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
@@ -98,6 +99,7 @@ fun CheckInTab(
                 color = if (uiState.online) colors.danger else colors.onPrimary
             )
         }
+        */
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -143,11 +145,6 @@ fun CheckInTab(
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-
-        var online = false
-
-        FloatingActionButton(
-        }
     }
 }
 
@@ -176,13 +173,13 @@ private fun OnlineStatusCard(
             Spacer(modifier = Modifier.height(5.dp))
             InfoRow("姓名", uname, textColor)
             Spacer(modifier = Modifier.height(5.dp))
-            Text(time, color = textColor,fontSize = 15.sp)
+            InfoRow("本次签到开始时间", time, textColor)
             if (!statusKnown) {
                 Spacer(modifier = Modifier.height(5.dp))
                 Text("状态未确认，请检查网络", color = textColor, fontSize = 13.sp)
             }
             Spacer(modifier = Modifier.height(5.dp))
-            InfoRow("本周签到总时长" ,totalTime, textColor)
+            InfoRow("本周签到总时长", totalTime, textColor)
             Spacer(modifier = Modifier.height(5.dp))
             InfoRow("周序", week, textColor)
         }
@@ -212,7 +209,7 @@ private fun CampusNetworkHint(state: NetworkUtil.NetState) {
 @Composable
 private fun InfoRow(label: String, value: String, color: Color) {
     Row {
-        Text("$label: ", color = color)
-        Text(value, color = color,fontSize = 16.sp)
+        Text("$label: ", color = KxTheme.colors.primary)
+        Text(value, color = color, fontSize = 16.sp)
     }
 }

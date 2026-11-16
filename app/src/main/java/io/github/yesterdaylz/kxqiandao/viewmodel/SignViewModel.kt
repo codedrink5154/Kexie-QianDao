@@ -38,7 +38,7 @@ import java.util.Locale
 import kotlin.collections.filter
 import kotlin.time.Duration.Companion.milliseconds
 
-private const val TIME_NULL = "本次签到开始时间: null"
+private const val TIME_NULL = "null"
 
 private const val REFRESH_THROTTLE_MS = 1500L
 
@@ -210,7 +210,7 @@ class SignViewModel : ViewModel() {
                     uname = serverName
                         ?: state.uname.takeIf { (serverUid ?: uid) == state.selfUid }
                         ?: "",
-                    time = "本次签到开始时间: $startTime",
+                    time = "$startTime",
                     totalTime = totalTime,
                     week = data.week?.toString() ?: savedWeek,
                     online = true,
