@@ -143,6 +143,11 @@ fun CheckInTab(
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
+
+        var online = false
+
+        FloatingActionButton(
+        }
     }
 }
 
