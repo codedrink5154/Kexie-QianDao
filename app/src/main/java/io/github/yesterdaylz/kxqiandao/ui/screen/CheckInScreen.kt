@@ -169,19 +169,19 @@ private fun OnlineStatusCard(
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             val textColor = if (online) colors.onSuccess else colors.onMuted
-            InfoRow("学号", uid, online)
+            InfoRow("学号", uid)
             Spacer(modifier = Modifier.height(5.dp))
-            InfoRow("姓名", uname, online)
+            InfoRow("姓名", uname)
             Spacer(modifier = Modifier.height(5.dp))
-            InfoRow("本次签到开始时间", time, online)
+            if (online) InfoRow("本次签到开始时间", time) else InfoRow("本次签到时长", time)
             if (!statusKnown) {
                 Spacer(modifier = Modifier.height(5.dp))
                 Text("状态未确认，请检查网络", color = textColor, fontSize = 13.sp)
             }
             Spacer(modifier = Modifier.height(5.dp))
-            InfoRow("本周签到总时长", totalTime, online)
+            InfoRow("本周签到总时长", totalTime)
             Spacer(modifier = Modifier.height(5.dp))
-            InfoRow("周序", week, online)
+            InfoRow("周序", week)
         }
     }
 }
@@ -207,9 +207,9 @@ private fun CampusNetworkHint(state: NetworkUtil.NetState) {
 }
 
 @Composable
-private fun InfoRow(label: String, value: String, online: Boolean) {
+private fun InfoRow(label: String, value: String) {
     Row {
         Text("$label: ", color = KxTheme.colors.primary)
-        Text(value, color = KxTheme.colors.onSurface, fontSize = 16.sp)
+        Text(if (value == "null") "无" else value, color = KxTheme.colors.onSurface, fontSize = 16.sp)
     }
 }

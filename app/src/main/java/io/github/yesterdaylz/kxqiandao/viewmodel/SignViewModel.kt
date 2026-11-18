@@ -312,7 +312,7 @@ class SignViewModel : ViewModel() {
                                     uname = newName,
                                     totalTime = data.totalTime.orEmpty(),
                                     week = data.week.orEmpty(),
-                                    time = "本次签到开始时间: $formattedTime",
+                                    time = "$formattedTime",
                                     online = true,
                                     statusKnown = true,
                                 )
@@ -378,7 +378,7 @@ class SignViewModel : ViewModel() {
                                     uname = newName,
                                     totalTime = data.totalTime.orEmpty(),
                                     week = data.week.orEmpty(),
-                                    time = "本次签到时长: ${data.accumulatedTime.orEmpty()}",
+                                    time = data.accumulatedTime.orEmpty(),
                                     online = false,
                                     statusKnown = true,
                                 )
